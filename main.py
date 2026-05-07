@@ -26,7 +26,7 @@ from pytools import saveload as sl
 
 def main(Omega_M, Omega_EE, w, z, type="return"):
     sy.header(
-        "iniciando HoggCosmoMeasures...", Omega_M=Omega_M, Omega_EE=Omega_EE, w=w, z=z
+        "iniciando HoggCosmoMeasures...", Omega_M=round(Omega_M,2), Omega_EE=round(Omega_EE,2), w=round(w,2), z=round(z,2),
     )
 
     # ? -----------------------------------------------------------------------------
@@ -99,7 +99,6 @@ def main(Omega_M, Omega_EE, w, z, type="return"):
             sl.savetable("DIFdados", (DIFvectorX, DIFvectorY))
             sy.ok(("infos", "DLdados", "MUdados", "DLAPdados", "DIFdados"))
         elif type == "M":
-            sy.status("Iniciando exportação de dados")
             sy.status("Iniciando exportação de dados...")
             sl.savetable("infosM", ((Omega_M, Omega_EE, w, z), ("", "", "", "")))
             sl.savetable("DLdadosM", (DLvectorX, DLvectorY))
@@ -108,7 +107,6 @@ def main(Omega_M, Omega_EE, w, z, type="return"):
             sl.savetable("DIFdadosM", (DIFvectorX, DIFvectorY))
             sy.ok(("infosM", "DLdadosM", "MUdadosM", "DLAPdadosM", "DIFdadosM"))
         elif type == "EE":
-            sy.status("Iniciando exportação de dados")
             sy.status("Iniciando exportação de dados...")
             sl.savetable("infosEE", ((Omega_M, Omega_EE, w, z), ("", "", "", "")))
             sl.savetable("DLdadosEE", (DLvectorX, DLvectorY))
@@ -122,7 +120,7 @@ def main(Omega_M, Omega_EE, w, z, type="return"):
                 dL(Omega_M, Omega_EE, resintlist[0], z),
                 mu(Omega_M, Omega_EE, resintlist[0], z),
             ]
-        sy.fim()
+        sy.fim("EXECUÇÃO DE MAIN FINALIZADA!")
     except Exception as e:
         sy.ok(f"Falha no processo de salvamento! Erro: {e}...", False)
 
@@ -133,4 +131,4 @@ def main(Omega_M, Omega_EE, w, z, type="return"):
 
 
 if __name__ == "__main__":
-    main(Omega_M, Omega_EE, w, z, type="custom")
+    main(Omega_M, Omega_EE, w, z_max, type="custom")

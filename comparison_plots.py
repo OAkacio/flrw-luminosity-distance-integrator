@@ -40,9 +40,9 @@ try:
         ("Omega_M", infos[0]), ("Omega_EE", infos[1]), ("w", infos[2]), ("z", infos[3])
     )
     sy.status("Iniciando análise de universo de somente materia...")
-    main(1, 0, -1, z, "M")
+    main(1, 0, -1, z_max, "M")
     sy.status("Iniciando análise de universo de somente energia...")
-    main(0, 1, -1, z, "EE")
+    main(0, 1, -1, z_max, "EE")
 except Exception as e:
     sy.ok(
         f"Um erro foi encontrado ao tentar executar a rotina principal. Erro: {e}",
@@ -54,7 +54,7 @@ except Exception as e:
 # ? -----------------------------------------------------------------------------
 
 try:
-    sy.status("Carregando dados gerados....")
+    sy.status("Carregando dados gerados...")
     dadosM = "DLdadosM.txt"
     dadosEE = "DLdadosEE.txt"
     dadosMEE = f"DLdados.txt"

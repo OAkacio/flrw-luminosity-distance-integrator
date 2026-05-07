@@ -80,9 +80,9 @@ except Exception as e:
     sy.ok(f"Um erro foi encontrado ao tentar calcular as incertezas. Erro: {e}", False)
 try:
     sy.status("Iniciando criação de gráfico de distribuição qui-quadrado...")
-    deltachi1=var1d[1][INDchi_min]-var1d[1][L_INDchi_sigma1]
-    deltachi2=var1d[1][INDchi_min]-var1d[1][L_INDchi_sigma2]
-    deltachi3=var1d[1][INDchi_min]-var1d[1][L_INDchi_sigma3]
+    deltachi1 = var1d[1][INDchi_min] - var1d[1][L_INDchi_sigma1]
+    deltachi2 = var1d[1][INDchi_min] - var1d[1][L_INDchi_sigma2]
+    deltachi3 = var1d[1][INDchi_min] - var1d[1][L_INDchi_sigma3]
     gp.basicstyle(
         x_data=var1d[1],
         y_data=var1d[0],
@@ -92,19 +92,64 @@ try:
         y_label=r"$\chi^2$",
         save_fig=True,
         linestyle="--",
-        highlight_label="Densidade de Matéria Bestfit",
+        highlight_label=rf"$\Omega_m$ MLE",
         highlight_marker="|",
         highlight_size=200,
         curve_label=r"Distribuição de $\chi^2$",
         filename="CHIdistribuicao",
         show_plot=False,
-        sigma_intervals=((var1d[1][INDchi_min]-deltachi1,var1d[1][INDchi_min]+deltachi1),(var1d[1][INDchi_min]-deltachi2,var1d[1][INDchi_min]+deltachi2),(var1d[1][INDchi_min]-deltachi3,var1d[1][INDchi_min]+deltachi3)),
+        sigma_intervals=(
+            (var1d[1][INDchi_min] - deltachi1, var1d[1][INDchi_min] + deltachi1),
+            (var1d[1][INDchi_min] - deltachi2, var1d[1][INDchi_min] + deltachi2),
+            (var1d[1][INDchi_min] - deltachi3, var1d[1][INDchi_min] + deltachi3),
+        ),
         show_sigma_lines=True,
     )
     sy.ok(("Gráfico de distribuição qui-quadrado"))
 except Exception as e:
     sy.ok(
         f"Um erro foi encontrado ao tentar plotar o gráfico de distribuição qui-quadrado. Erro: {e}",
+        False,
+    )
+try:
+    sy.status(
+        "Iniciando geração de dados da curva gerada pelos parâmetros ajustados..."
+    )
+    main(
+        Omega_M=var1d[1][INDchi_min],
+        Omega_EE=var1d[2][INDchi_min],
+        w=-1,
+        z=max(z_list),
+        type="custom",
+    )
+    ajustMUvectorX = sl.loadtable(f"data/MUdados.txt")[0]
+    ajustMUvectorY = sl.loadtable(f"data/MUdados.txt")[1]
+    sy.status("Iniciando geração da curva gerada pelos parâmetros ajustados...")
+    gp.multierror(
+        x_list=[z_list, ajustMUvectorX],
+        y_list=[mu_obs_list, ajustMUvectorY],
+        y_err_list=[ERROmu_obs_list, None],
+        title="",
+        x_label=r"$z$",
+        y_label=r"$\mu$ (mag)",
+        save_fig=True,
+        filename="MUdistribuicaoOBSVARREDURA1D",
+        show_plot=False,
+        linestyle=["none", "-"],
+        marker="none",
+        ecolor="#A9A9A9",
+        elinewidth=1,
+        capsize=3.0,
+        capthick=1,
+        alpha=0.7,
+        color_style="#0E4D92",
+        linewidth=1.5,
+        curve_names=("Dados observados", "Curva MLE"),
+    )
+    sy.ok("Gráfico dos parâmetros ajustados com dados observados criado com sucesso!")
+except Exception as e:
+    sy.ok(
+        f"Um erro foi encontrado ao tentar plotar o gráfico dos parâmetros ajustados. Erro: {e}",
         False,
     )
 
@@ -201,7 +246,7 @@ try:
         legend_alpha=0.15,
         legend_fontsize=10,
         colorbar_ticks=3,
-        highlight_label="Melhor Ajuste",
+        highlight_label="Ponto MLE",
         filename="mapadecalorMEE",
         show_plot=False,
     )
@@ -209,6 +254,47 @@ try:
 except Exception as e:
     sy.ok(
         f"Um erro foi encontrado ao tentar criar o gráfico de distribuição qui-quadrado. Erro: {e}",
+        False,
+    )
+try:
+    sy.status(
+        "Iniciando geração de dados da curva gerada pelos parâmetros ajustados..."
+    )
+    main(
+        Omega_M=omegaM_list[MINDchi2d_min],
+        Omega_EE=omegaEE_list[EEINDchi2d_min],
+        w=-1,
+        z=max(z_list),
+        type="custom",
+    )
+    ajustMUvectorXV2 = sl.loadtable(f"data/MUdados.txt")[0]
+    ajustMUvectorYV2 = sl.loadtable(f"data/MUdados.txt")[1]
+    sy.status("Iniciando geração da curva gerada pelos parâmetros ajustados...")
+    gp.multierror(
+        x_list=[z_list, ajustMUvectorXV2],
+        y_list=[mu_obs_list, ajustMUvectorYV2],
+        y_err_list=[ERROmu_obs_list, None],
+        title="",
+        x_label=r"$z$",
+        y_label=r"$\mu$ (mag)",
+        save_fig=True,
+        filename="MUdistribuicaoOBSVARREDURA2D_MvsEE_SemPrior",
+        show_plot=False,
+        linestyle=["none", "-"],
+        marker="none",
+        ecolor="#A9A9A9",
+        elinewidth=1,
+        capsize=3.0,
+        capthick=1,
+        alpha=0.7,
+        color_style="#0E4D92",
+        linewidth=1.5,
+        curve_names=("Dados observados", "Curva MLE"),
+    )
+    sy.ok("Gráfico dos parâmetros ajustados com dados observados criado com sucesso!")
+except Exception as e:
+    sy.ok(
+        f"Um erro foi encontrado ao tentar plotar o gráfico dos parâmetros ajustados. Erro: {e}",
         False,
     )
 
@@ -286,7 +372,7 @@ try:
         legend_alpha=0.15,
         legend_fontsize=10,
         colorbar_ticks=3,
-        highlight_label="Melhor Ajuste",
+        highlight_label="Ponto MLE",
         filename="mapadecalormEEPRIOR",
         show_plot=False,
     )
@@ -295,6 +381,47 @@ try:
 except Exception as e:
     sy.ok(
         f"Um erro foi encontrado ao tentar plotar o gráfico de distribuição qui-quadrado corrigido. Erro: {e}",
+        False,
+    )
+try:
+    sy.status(
+        "Iniciando geração de dados da curva gerada pelos parâmetros ajustados..."
+    )
+    main(
+        Omega_M=omegaM_list[MINDchi2d_minPRIOR],
+        Omega_EE=omegaEE_list[EEINDchi2d_minPRIOR],
+        w=-1,
+        z=max(z_list),
+        type="custom",
+    )
+    ajustMUvectorXV2PRIOR = sl.loadtable(f"data/MUdados.txt")[0]
+    ajustMUvectorYV2PRIOR = sl.loadtable(f"data/MUdados.txt")[1]
+    sy.status("Iniciando geração da curva gerada pelos parâmetros ajustados...")
+    gp.multierror(
+        x_list=[z_list, ajustMUvectorX],
+        y_list=[mu_obs_list, ajustMUvectorY],
+        y_err_list=[ERROmu_obs_list, None],
+        title="",
+        x_label=r"$z$",
+        y_label=r"$\mu$ (mag)",
+        save_fig=True,
+        filename="MUdistribuicaoOBSVARREDURA2D_MvsEE_ComPrior",
+        show_plot=False,
+        linestyle=["none", "-"],
+        marker="none",
+        ecolor="#A9A9A9",
+        elinewidth=1,
+        capsize=3.0,
+        capthick=1,
+        alpha=0.7,
+        color_style="#0E4D92",
+        linewidth=1.5,
+        curve_names=("Dados observados", "Curva MLE"),
+    )
+    sy.ok("Gráfico dos parâmetros ajustados com dados observados criado com sucesso!")
+except Exception as e:
+    sy.ok(
+        f"Um erro foi encontrado ao tentar plotar o gráfico dos parâmetros ajustados. Erro: {e}",
         False,
     )
 
@@ -386,13 +513,83 @@ try:
         legend_alpha=0.15,
         legend_fontsize=10,
         colorbar_ticks=3,
-        highlight_label="Melhor Ajuste",
+        highlight_label="Ponto MLE",
         filename="mapadecalorWM",
         show_plot=False,
     )
 except Exception as e:
     sy.ok(
         f"Um erro foi encontrado ao tentar criar o gráfico de distribuição qui-quadrado. Erro: {e}",
+        False,
+    )
+try:
+    sy.status(
+        "Iniciando geração de dados da curva gerada pelos parâmetros ajustados..."
+    )
+    main(
+        Omega_M=omegaM_list[MINDchi2dOW_min],
+        Omega_EE=1-omegaM_list[MINDchi2dOW_min],
+        w=w_list[WINDchi2dOW_min],
+        z=max(z_list),
+        type="custom",
+    )
+    ajustMUvectorXV2w = sl.loadtable(f"data/MUdados.txt")[0]
+    ajustMUvectorYV2w = sl.loadtable(f"data/MUdados.txt")[1]
+    sy.status("Iniciando geração da curva gerada pelos parâmetros ajustados...")
+    gp.multierror(
+        x_list=[z_list, ajustMUvectorXV2w],
+        y_list=[mu_obs_list, ajustMUvectorYV2w],
+        y_err_list=[ERROmu_obs_list, None],
+        title="",
+        x_label=r"$z$",
+        y_label=r"$\mu$ (mag)",
+        save_fig=True,
+        filename="MUdistribuicaoOBSVARREDURA1D",
+        show_plot=False,
+        linestyle=["none", "-"],
+        marker="none",
+        ecolor="#A9A9A9",
+        elinewidth=1,
+        capsize=3.0,
+        capthick=1,
+        alpha=0.7,
+        color_style="#0E4D92",
+        linewidth=1.5,
+        curve_names=("Dados observados", "Curva MLE"),
+    )
+    sy.ok("Gráfico dos parâmetros ajustados com dados observados criado com sucesso!")
+except Exception as e:
+    sy.ok(
+        f"Um erro foi encontrado ao tentar plotar o gráfico dos parâmetros ajustados. Erro: {e}",
+        False,
+    )
+try:
+    sy.status("Iniciando geração de gráfico de superposição de curvas ajustadas...")
+    gp.multierror(
+        x_list=[z_list, ajustMUvectorX, ajustMUvectorXV2, ajustMUvectorXV2PRIOR, ajustMUvectorXV2w],
+        y_list=[mu_obs_list, ajustMUvectorY, ajustMUvectorYV2, ajustMUvectorYV2PRIOR, ajustMUvectorYV2w],
+        y_err_list=[ERROmu_obs_list, None, None, None, None],
+        title="",
+        x_label=r"$z$",
+        y_label=r"$\mu$ (mag)",
+        save_fig=True,
+        filename="MUdistribuicaoOBSSuperposicao",
+        show_plot=False,
+        linestyle=["none", "-", "-", "-", "-"],
+        marker="none",
+        ecolor="#A9A9A9",
+        elinewidth=1,
+        capsize=3.0,
+        capthick=1,
+        alpha=0.7,
+        color_style="random",
+        linewidth=0.1,
+        curve_names=("Dados observados", rf"Curva MLE ($\Omega_m$)", rf"Curva MLE ($\Omega_m$ vs. $\Omega_\Lambda$)", rf"Curva MLE com PRIOR ($\Omega_m$ vs. $\Omega_\Lambda$)", rf"Curva MLE ($\Omega_m$ vs. $w$)"),
+    )
+    sy.ok("Gráfico da superposição das curvas ajustadas criado com sucesso!")
+except Exception as e:
+    sy.ok(
+        f"Um erro foi encontrado ao tentar plotar o gráfico da superposição das curvas ajustadas. Erro: {e}",
         False,
     )
 
