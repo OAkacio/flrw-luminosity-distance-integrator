@@ -3,7 +3,7 @@
 ![Python Version](https://img.shields.io/badge/python-3.10%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-Este repositório contém um integrador numérico desenvolvido em Python para o cálculo da Distância de Luminosidade ($d_L$) dentro do formalismo de Hogg e modelos cosmológicos de Friedmann-Lemaître-Robertson-Walker (FLRW). Além disso, o projeto inclui um conjunto de ferramentas completas de inferência estatística, permitindo não só a superposição de universos teóricos, mas também o ajuste de parâmetros cosmológicos a partir de dados observacionais de Supernovas do Tipo Ia (SNe Ia).
+Este repositório contém um integrador numérico desenvolvido em Python para o cálculo da Distância de Luminosidade ($d_L$), módulo de distância ($\mu$) e diversas outras análises dentro do formalismo de Hogg e modelos cosmológicos de Friedmann-Lemaître-Robertson-Walker (FLRW). Além disso, o projeto inclui um conjunto de ferramentas completas de inferência estatística, permitindo não só a superposição de universos teóricos, mas também o ajuste de parâmetros cosmológicos a partir de dados observacionais de Supernovas do Tipo Ia (SNe Ia).
 
 ## Autoria
 
@@ -17,14 +17,14 @@ ORCID: [0009-0007-4484-2129](https://orcid.org/0009-0007-4484-2129)
 
 ## Instalação
 
-Este repositório utiliza um submódulo (`toolkit`) para ferramentas auxiliares. Para clonar o projeto garantindo que todos os arquivos do submódulo sejam baixados simultaneamente, utilize a flag `--recurse-submodules` no seu terminal:
+Este repositório utiliza um submódulo (`pytools`) para ferramentas auxiliares. Para clonar o projeto garantindo que todos os arquivos do submódulo sejam baixados simultaneamente, utilize a flag `--recurse-submodules` no seu terminal:
 
 ```bash
-git clone --recurse-submodules [https://github.com/OAkacio/HoggCosmoMeasures.git](https://github.com/OAkacio/HoggCosmoMeasures.git)
+git clone https://github.com/OAkacio/HoggCosmoMeasures.git
 cd HoggCosmoMeasures
 pip install -r requirements.txt
 ```
-**Nota:** Caso você já tenha clonado o repositório utilizando o comando padrão (sem a flag) e a pasta do submódulo esteja vazia, você pode inicializar e atualizar o toolkit executando o seguinte comando dentro da pasta do projeto:
+**Nota:** Caso você já tenha clonado o repositório utilizando o comando padrão (sem a flag) e a pasta do submódulo esteja vazia, você pode inicializar e atualizar o pytools executando o seguinte comando dentro da pasta do projeto:
 
 ```bash
 git submodule update --init --recursive
