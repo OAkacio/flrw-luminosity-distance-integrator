@@ -100,6 +100,14 @@ def main(Omega_M, Omega_EE, w, z, type="return"):
         sy.ok(
             f"Processo de cálculo de elementos analíticos falhou! Erro: {e}...", False
         )
+    try:
+        sy.status("Iniciando processo de cálculo de Magnitude Aparente...")
+        MagAp_list=MagAp_list_MAGABSCONST(MUvectorY, MagABS)
+        sy.ok("Cálculo de Magnitude Aparente concluido!", True)
+    except Exception as e:
+        sy.ok(
+            f"Processo de cálculo de Magnitude Aparente falhou! Erro: {e}...", False
+        )
         # ? -----------------------------------------------------------------------------
         # ?         EXPORTAÇÃO DE DADOS
         # ? -----------------------------------------------------------------------------
@@ -114,7 +122,8 @@ def main(Omega_M, Omega_EE, w, z, type="return"):
             sl.savetable("ANALMU_Mdados", (ANALZ_list, ANALMU_M))
             sl.savetable("ANALMU_EEdados", (ANALZ_list, ANALMU_EE))
             sl.savetable("ANALMU_Vdados", (ANALZ_list, ANALMU_V))
-            sy.ok(("infos", "DLdados", "MUdados", "DLAPdados", "DIFdados", "ANALMU_Mdados", "ANALMU_EEdados", "ANALMU_Vdados"))
+            sl.savetable("MagAp_list", (MUvectorX, MagAp_list))
+            sy.ok(("infos", "DLdados", "MUdados", "DLAPdados", "DIFdados", "ANALMU_Mdados", "ANALMU_EEdados", "ANALMU_Vdados", "MagAp_list"))
         elif type == "M":
             sy.status("Iniciando exportação de dados...")
             sl.savetable("infosM", ((Omega_M, Omega_EE, w, z), ("", "", "", "")))

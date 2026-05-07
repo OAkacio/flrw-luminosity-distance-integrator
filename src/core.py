@@ -55,9 +55,14 @@ def approx_dL(Omega_M, Omega_EE, z, w):
     """Calcula a aproximação de distância de luminosidade (dL) para pequenos redshifts (z) usando o parâmetro de desaceleração (q0)."""
     return (c / H0) * z * (1 + (1 - q0(Omega_M, Omega_EE, w)) * z / 2)
 
+
 def ANALmu(dL):
     """Calcula a magnitude de distância (mu) de um universo característico a partir da equação analítica."""
     return 5 * np.log10(dL) + 25
+
+
+def MagAp(mu, M_abs):
+    return mu + M_abs
 
 
 def Omega_K(Omega_M, Omega_EE):
@@ -174,11 +179,12 @@ def solution(Omega_M, Omega_EE, z, z_step, w):
         DIFvectorY,
     ]
 
+
 def analitic_solutionator(z, z_step):
-    ANALMU_M=[]
-    ANALMU_EE=[]
-    ANALMU_V=[]
-    ANALZ_list=[]
+    ANALMU_M = []
+    ANALMU_EE = []
+    ANALMU_V = []
+    ANALZ_list = []
     for i in tqdm(
         np.arange(float(z_step), float(z) + float(z_step), float(z_step)),
         desc="PROGRESSO",
@@ -193,6 +199,12 @@ def analitic_solutionator(z, z_step):
         ANALMU_V,
         ANALZ_list,
     ]
+
+def MagAp_list_MAGABSCONST(mu_list, M):
+    MagAP_list=[]
+    for mu in mu_list:
+        MagAP_list.append(MagAp(mu, M))
+    return MagAP_list
 
 # ? -----------------------------------------------------------------------------
 # ?         FUNÇÕES SISTEMÁTICAS DE CÁLCULO NO INFERENCE

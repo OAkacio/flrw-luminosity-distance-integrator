@@ -37,6 +37,7 @@ try:
     DIFvectorX = sl.loadtable(f"data/DIFdados.txt")[0]
     MUvectorX = sl.loadtable(f"data/MUdados.txt")[0]
     ANALMUX = sl.loadtable(f"data/ANALMU_Mdados.txt")[0]
+    MagApX = sl.loadtable(f"data/MagAp_list.txt")[0]
     DLvectorY = sl.loadtable(f"data/DLdados.txt")[1]
     DLAPvectorY = sl.loadtable(f"data/DLAPdados.txt")[1]
     DIFvectorY = sl.loadtable(f"data/DIFdados.txt")[1]
@@ -44,6 +45,7 @@ try:
     ANALMU_MY = sl.loadtable(f"data/ANALMU_Mdados.txt")[1]
     ANALMU_EEY = sl.loadtable(f"data/ANALMU_EEdados.txt")[1]
     ANALMU_VY = sl.loadtable(f"data/ANALMU_Vdados.txt")[1]
+    MagApY = sl.loadtable(f"data/MagAp_list.txt")[1]
     infos = sl.loadtable(f"data/infos.txt")[0]
     sy.ok(
         (
@@ -116,6 +118,16 @@ try:
         y_label=r"$\mu$ (mag)",
         save_fig=True,
         filename="MUdistribuicao",
+        show_plot=False,
+    )
+    gp.basic(
+        x_data=MagApX,
+        y_data=MagApY,
+        title="",
+        x_label=r"$z$",
+        y_label=r"$m$ (mag)",
+        save_fig=True,
+        filename="MagApdistribuicao",
         show_plot=False,
     )
     gp.multi(
