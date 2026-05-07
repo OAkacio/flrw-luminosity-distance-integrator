@@ -15,6 +15,7 @@ import numpy as np
 # ? -----------------------------------------------------------------------------
 
 from src.constants import c, H0
+from src.parameters import *
 from pytools import graphs as gp
 from pytools import system as sy
 from pytools import saveload as sl
@@ -42,7 +43,7 @@ try:
     MUvectorY = sl.loadtable(f"data/MUdados.txt")[1]
     ANALMU_MY = sl.loadtable(f"data/ANALMU_Mdados.txt")[1]
     ANALMU_EEY = sl.loadtable(f"data/ANALMU_EEdados.txt")[1]
-    ANALMU_VY = sl.loadtable(f"data/ANALMU_Mdados.txt")[1]
+    ANALMU_VY = sl.loadtable(f"data/ANALMU_Vdados.txt")[1]
     infos = sl.loadtable(f"data/infos.txt")[0]
     sy.ok(("infos", "DLdados", "MUdados", "DLAPdados", "DIFdados", "ANALMU_Mdados", "ANALMU_EEdados", "ANALMU_Vdados"))
     sy.status("Dados carregados com sucesso!")
@@ -106,7 +107,7 @@ try:
         title="",
         x_label=r"$z$",
         y_label=r"$\mu$ (mag)",
-        curve_names=("Curva Analítica", "Curva Numérica"),
+        curve_names=("Curva Analítica - Universo de Somente Matéria", rf"Curva Numérica ( $\Omega_m={Omega_M}, \Omega_\Lambda={Omega_EE}$ )"),
         save_fig=True,
         filename="AnalitVSNumer_M",
         show_plot=False,
@@ -117,7 +118,7 @@ try:
         title="",
         x_label=r"$z$",
         y_label=r"$\mu$ (mag)",
-        curve_names=("Curva Analítica", "Curva Numérica"),
+        curve_names=("Curva Analítica - Universo de Somente Energia", rf"Curva Numérica ( $\Omega_m={Omega_M}, \Omega_\Lambda={Omega_EE}$ )"),
         save_fig=True,
         filename="AnalitVSNumer_EE",
         show_plot=False,
@@ -128,7 +129,7 @@ try:
         title="",
         x_label=r"$z$",
         y_label=r"$\mu$ (mag)",
-        curve_names=("Curva Analítica", "Curva Numérica"),
+        curve_names=("Curva Analítica - Universo Vazio", rf"Curva Numérica ( $\Omega_m={Omega_M}, \Omega_\Lambda={Omega_EE}$ )"),
         save_fig=True,
         filename="AnalitVSNumer_V",
         show_plot=False,
