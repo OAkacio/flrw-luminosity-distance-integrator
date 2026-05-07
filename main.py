@@ -108,6 +108,16 @@ def main(Omega_M, Omega_EE, w, z, type="return"):
         sy.ok(
             f"Processo de cálculo de Magnitude Aparente falhou! Erro: {e}...", False
         )
+    try:
+        sy.status("Iniciando processo obtenção de dados pelo ASTROPY para validação e comparação...")
+        astropy_DL=astropyComparison(Omega_M, Omega_EE, z, z_step)[0]
+        astropy_MU=astropyComparison(Omega_M, Omega_EE, z, z_step)[1]
+        astropy_Z=astropyComparison(Omega_M, Omega_EE, z, z_step)[2]
+        sy.ok(["astropy_DL","astropy_MU", "astropy_Z"])
+    except Exception as e:
+        sy.ok(
+            f"Processo de obtenção de dados pelo ASTROPY falhou! Erro: {e}...", False
+        )
         # ? -----------------------------------------------------------------------------
         # ?         EXPORTAÇÃO DE DADOS
         # ? -----------------------------------------------------------------------------
@@ -123,7 +133,9 @@ def main(Omega_M, Omega_EE, w, z, type="return"):
             sl.savetable("ANALMU_EEdados", (ANALZ_list, ANALMU_EE))
             sl.savetable("ANALMU_Vdados", (ANALZ_list, ANALMU_V))
             sl.savetable("MagAp_list", (MUvectorX, MagAp_list))
-            sy.ok(("infos", "DLdados", "MUdados", "DLAPdados", "DIFdados", "ANALMU_Mdados", "ANALMU_EEdados", "ANALMU_Vdados", "MagAp_list"))
+            sl.savetable("astropy_DL", (list(astropy_Z), list(astropy_DL)))
+            sl.savetable("astropy_MU", (list(astropy_Z), list(astropy_MU)))
+            sy.ok(("infos", "DLdados", "MUdados", "DLAPdados", "DIFdados", "ANALMU_Mdados", "ANALMU_EEdados", "ANALMU_Vdados", "MagAp_list", "astropy_DL", "astropy_MU"))
         elif type == "M":
             sy.status("Iniciando exportação de dados...")
             sl.savetable("infosM", ((Omega_M, Omega_EE, w, z), ("", "", "", "")))

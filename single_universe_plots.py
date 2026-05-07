@@ -38,6 +38,7 @@ try:
     MUvectorX = sl.loadtable(f"data/MUdados.txt")[0]
     ANALMUX = sl.loadtable(f"data/ANALMU_Mdados.txt")[0]
     MagApX = sl.loadtable(f"data/MagAp_list.txt")[0]
+    astropyX= sl.loadtable(f"data/astropy_MU.txt")[0]
     DLvectorY = sl.loadtable(f"data/DLdados.txt")[1]
     DLAPvectorY = sl.loadtable(f"data/DLAPdados.txt")[1]
     DIFvectorY = sl.loadtable(f"data/DIFdados.txt")[1]
@@ -46,6 +47,8 @@ try:
     ANALMU_EEY = sl.loadtable(f"data/ANALMU_EEdados.txt")[1]
     ANALMU_VY = sl.loadtable(f"data/ANALMU_Vdados.txt")[1]
     MagApY = sl.loadtable(f"data/MagAp_list.txt")[1]
+    astropy_DL= sl.loadtable(f"data/astropy_DL.txt")[1]
+    astropy_MU= sl.loadtable(f"data/astropy_MU.txt")[1]
     infos = sl.loadtable(f"data/infos.txt")[0]
     sy.ok(
         (
@@ -57,6 +60,8 @@ try:
             "ANALMU_Mdados",
             "ANALMU_EEdados",
             "ANALMU_Vdados",
+            "astropy_DL",
+            "astropy_MU",
         )
     )
     sy.status("Dados carregados com sucesso!")
@@ -170,6 +175,40 @@ try:
         ),
         save_fig=True,
         filename="AnalitVSNumer_V",
+        show_plot=False,
+    )
+    gp.multi(
+        x_list=(
+            DLvectorX,
+            astropyX,
+        ),
+        y_list=(DLvectorY / (c / H0), astropy_DL / (c / H0)),
+        title="",
+        x_label=r"$z$",
+        y_label=r"$d_L \; /\; \left(\frac{c}{H_0}\right)$",
+        curve_names=(
+            rf"Curva Exata ( $\Omega_m={Omega_M}, \Omega_\Lambda={Omega_EE}$ )",
+            "Curva de Validação Astropy",
+        ),
+        save_fig=True,
+        filename="validacaoDLastropy",
+        show_plot=False,
+    )
+    gp.multi(
+        x_list=(
+            MUvectorX,
+            astropyX,
+        ),
+        y_list=(MUvectorY, astropy_MU),
+        title="",
+        x_label=r"$z$",
+        y_label=r"$\mu$",
+        curve_names=(
+            rf"Curva Exata ( $\Omega_m={Omega_M}, \Omega_\Lambda={Omega_EE}$ )",
+            "Curva de Validação Astropy",
+        ),
+        save_fig=True,
+        filename="validacaoMUastropy",
         show_plot=False,
     )
     sy.ok(

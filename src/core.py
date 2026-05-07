@@ -10,6 +10,7 @@
 import numpy as np
 from scipy.integrate import quad
 from tqdm import tqdm
+from astropy.cosmology import LambdaCDM, wCDM
 
 # ? -----------------------------------------------------------------------------
 # ?         MÓDULOS LOCAIS
@@ -180,6 +181,14 @@ def solution(Omega_M, Omega_EE, z, z_step, w):
     ]
 
 
+def astropyComparison(Omega_M, Omega_EE, z, z_step):
+    z_array = np.arange(float(z_step), float(z) + float(z_step), float(z_step))
+    cosmo = LambdaCDM(H0=H0, Om0=Omega_M, Ode0=Omega_EE)
+    astroDL = cosmo.luminosity_distance(z_array).value
+    astroMU = cosmo.distmod(z_array).value
+    return [astroDL, astroMU, z_array]
+
+
 def analitic_solutionator(z, z_step):
     ANALMU_M = []
     ANALMU_EE = []
@@ -200,11 +209,13 @@ def analitic_solutionator(z, z_step):
         ANALZ_list,
     ]
 
+
 def MagAp_list_MAGABSCONST(mu_list, M):
-    MagAP_list=[]
+    MagAP_list = []
     for mu in mu_list:
         MagAP_list.append(MagAp(mu, M))
     return MagAP_list
+
 
 # ? -----------------------------------------------------------------------------
 # ?         FUNÇÕES SISTEMÁTICAS DE CÁLCULO NO INFERENCE
