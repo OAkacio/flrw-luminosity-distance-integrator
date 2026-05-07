@@ -17,17 +17,17 @@ ORCID: [0009-0007-4484-2129](https://orcid.org/0009-0007-4484-2129)
 
 ## Instalação
 
-Este repositório utiliza um submódulo (`pytools`) para ferramentas auxiliares. Para clonar o projeto garantindo que todos os arquivos do submódulo sejam baixados simultaneamente, utilize a flag `--recurse-submodules` no seu terminal:
+Este repositório utiliza um submódulo (`pytools`) para ferramentas auxiliares. Para clonar o projeto garantindo que todos os arquivos do submódulo sejam baixados simultaneamente, utilize o seguinte comando no seu terminal:
 
 ```bash
-git clone https://github.com/OAkacio/HoggCosmoMeasures.git
+git clone --recurse-submodules https://github.com/OAkacio/HoggCosmoMeasures
+```
+
+Para instalar todas as bibliotecas requeridas, use o seguinte comando:
+
+```bash
 cd HoggCosmoMeasures
 pip install -r requirements.txt
-```
-**Nota:** Caso você já tenha clonado o repositório utilizando o comando padrão (sem a flag) e a pasta do submódulo esteja vazia, você pode inicializar e atualizar o pytools executando o seguinte comando dentro da pasta do projeto:
-
-```bash
-git submodule update --init --recursive
 ```
 
 ## Uso
@@ -123,7 +123,7 @@ Os intervalos de confiança são construídos assumindo que a densidade de proba
 ├── main.py                               # Motor numérico isolado para cálculo de distâncias
 ├── observational_statistical_analysis.py # Suíte completa para a varredura do qui-quadrado
 ├── single_universe_plots.py              # Renderiza comportamento numérico de um modelo único
-├── toolkit/                              # Conjunto de ferramentas para gerar OUTPUTS (submódulo)
+├── pytools/                              # Conjunto de ferramentas para gerar OUTPUTS (submódulo)
 ├── obs_data.txt                          # Input dos dados observacionais (catálogo de Supernovas Ia)
 └── requirements.txt                      # Arquivo de dependências
 
