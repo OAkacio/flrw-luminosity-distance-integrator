@@ -45,7 +45,18 @@ try:
     ANALMU_EEY = sl.loadtable(f"data/ANALMU_EEdados.txt")[1]
     ANALMU_VY = sl.loadtable(f"data/ANALMU_Vdados.txt")[1]
     infos = sl.loadtable(f"data/infos.txt")[0]
-    sy.ok(("infos", "DLdados", "MUdados", "DLAPdados", "DIFdados", "ANALMU_Mdados", "ANALMU_EEdados", "ANALMU_Vdados"))
+    sy.ok(
+        (
+            "infos",
+            "DLdados",
+            "MUdados",
+            "DLAPdados",
+            "DIFdados",
+            "ANALMU_Mdados",
+            "ANALMU_EEdados",
+            "ANALMU_Vdados",
+        )
+    )
     sy.status("Dados carregados com sucesso!")
     sy.param(
         ("Omega_M", infos[0]), ("Omega_EE", infos[1]), ("w", infos[2]), ("z", infos[3])
@@ -75,7 +86,10 @@ try:
         title="",
         x_label=r"$z$",
         y_label=r"$d_L \; /\; \left(\frac{c}{H_0}\right)$",
-        curve_names=("Curva Exata", "Curva Aproximada"),
+        curve_names=(
+            rf"Curva Exata ( $\Omega_m={Omega_M}, \Omega_\Lambda={Omega_EE}$ )",
+            "Curva Aproximada",
+        ),
         save_fig=True,
         filename="ExataAproximadadistribuicao",
         show_plot=False,
@@ -86,7 +100,10 @@ try:
         title="",
         x_label=r"$z$",
         y_label=r"$d_L \; /\; \left(\frac{c}{H_0}\right)$",
-        curve_names=("Diferença Exato vs. Aproximado", "Zero"),
+        curve_names=(
+            rf"Diferença Exato vs. Aproximado ( $\Omega_m={Omega_M}, \Omega_\Lambda={Omega_EE}$ )",
+            "Zero",
+        ),
         save_fig=True,
         filename="DIFdistribuicao",
         show_plot=False,
@@ -107,7 +124,10 @@ try:
         title="",
         x_label=r"$z$",
         y_label=r"$\mu$ (mag)",
-        curve_names=("Curva Analítica - Universo de Somente Matéria", rf"Curva Numérica ( $\Omega_m={Omega_M}, \Omega_\Lambda={Omega_EE}$ )"),
+        curve_names=(
+            "Curva Analítica - Universo de Somente Matéria",
+            rf"Curva Numérica ( $\Omega_m={Omega_M}, \Omega_\Lambda={Omega_EE}$ )",
+        ),
         save_fig=True,
         filename="AnalitVSNumer_M",
         show_plot=False,
@@ -118,7 +138,10 @@ try:
         title="",
         x_label=r"$z$",
         y_label=r"$\mu$ (mag)",
-        curve_names=("Curva Analítica - Universo de Somente Energia", rf"Curva Numérica ( $\Omega_m={Omega_M}, \Omega_\Lambda={Omega_EE}$ )"),
+        curve_names=(
+            "Curva Analítica - Universo de Somente Energia",
+            rf"Curva Numérica ( $\Omega_m={Omega_M}, \Omega_\Lambda={Omega_EE}$ )",
+        ),
         save_fig=True,
         filename="AnalitVSNumer_EE",
         show_plot=False,
@@ -129,7 +152,10 @@ try:
         title="",
         x_label=r"$z$",
         y_label=r"$\mu$ (mag)",
-        curve_names=("Curva Analítica - Universo Vazio", rf"Curva Numérica ( $\Omega_m={Omega_M}, \Omega_\Lambda={Omega_EE}$ )"),
+        curve_names=(
+            "Curva Analítica - Universo Vazio",
+            rf"Curva Numérica ( $\Omega_m={Omega_M}, \Omega_\Lambda={Omega_EE}$ )",
+        ),
         save_fig=True,
         filename="AnalitVSNumer_V",
         show_plot=False,
