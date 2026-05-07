@@ -36,9 +36,28 @@ def dL(Omega_M, Omega_EE, resint, z):
     return (1 + z) * dm(Omega_M, Omega_EE, resint)
 
 
+def ANALdL_M(z):
+    """Calcula a distância de luminosidade (dL) de um universo dominado por matéria a partir da equação analítica."""
+    return (2 * c / H0) * (1 + z) * (1 - 1 / np.sqrt(1 + z))
+
+
+def ANALdL_EE(z):
+    """Calcula a distância de luminosidade (dL) de um universo dominado por energia a partir da equação analítica."""
+    return (c / H0) * z * (1 + z)
+
+
+def ANALdL_V(z):
+    """Calcula a distância de luminosidade (dL) de um universo vazio a partir da equação analítica."""
+    return (c / H0) * z * (1 + z / 2)
+
+
 def approx_dL(Omega_M, Omega_EE, z, w):
     """Calcula a aproximação de distância de luminosidade (dL) para pequenos redshifts (z) usando o parâmetro de desaceleração (q0)."""
     return (c / H0) * z * (1 + (1 - q0(Omega_M, Omega_EE, w)) * z / 2)
+
+def ANALmu(dL):
+    """Calcula a magnitude de distância (mu) de um universo característico a partir da equação analítica."""
+    return 5 * np.log10(dL) + 25
 
 
 def Omega_K(Omega_M, Omega_EE):
@@ -130,7 +149,10 @@ def solution(Omega_M, Omega_EE, z, z_step, w):
     DLAPvectorY = []
     DIFvectorX = []
     DIFvectorY = []
-    for i in tqdm(np.arange(float(z_step), float(z) + float(z_step), float(z_step)),desc="PROGRESSO"):
+    for i in tqdm(
+        np.arange(float(z_step), float(z) + float(z_step), float(z_step)),
+        desc="PROGRESSO",
+    ):
         iresint = integracao(integral, Omega_M, Omega_EE, i, w)
         DLvectorX.append(i)
         DLvectorY.append(dL(Omega_M, Omega_EE, iresint[0], i))
@@ -140,7 +162,7 @@ def solution(Omega_M, Omega_EE, z, z_step, w):
         DLAPvectorY.append(approx_dL(Omega_M, Omega_EE, i, w))
         if i <= 1:
             DIFvectorX.append(i)
-            DIFvectorY.append((DLvectorY[-1] - DLAPvectorY[-1])/DLvectorY[-1])
+            DIFvectorY.append((DLvectorY[-1] - DLAPvectorY[-1]) / DLvectorY[-1])
     return [
         DLvectorX,
         DLvectorY,
@@ -152,6 +174,25 @@ def solution(Omega_M, Omega_EE, z, z_step, w):
         DIFvectorY,
     ]
 
+def analitic_solutionator(z, z_step):
+    ANALMU_M=[]
+    ANALMU_EE=[]
+    ANALMU_V=[]
+    ANALZ_list=[]
+    for i in tqdm(
+        np.arange(float(z_step), float(z) + float(z_step), float(z_step)),
+        desc="PROGRESSO",
+    ):
+        ANALZ_list.append(i)
+        ANALMU_M.append(ANALmu(ANALdL_M(i)))
+        ANALMU_EE.append(ANALmu(ANALdL_EE(i)))
+        ANALMU_V.append(ANALmu(ANALdL_V(i)))
+    return [
+        ANALMU_M,
+        ANALMU_EE,
+        ANALMU_V,
+        ANALZ_list,
+    ]
 
 # ? -----------------------------------------------------------------------------
 # ?         FUNÇÕES SISTEMÁTICAS DE CÁLCULO NO INFERENCE

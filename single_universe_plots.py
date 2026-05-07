@@ -35,12 +35,16 @@ try:
     DLAPvectorX = sl.loadtable(f"data/DLAPdados.txt")[0]
     DIFvectorX = sl.loadtable(f"data/DIFdados.txt")[0]
     MUvectorX = sl.loadtable(f"data/MUdados.txt")[0]
+    ANALMUX = sl.loadtable(f"data/ANALMU_Mdados.txt")[0]
     DLvectorY = sl.loadtable(f"data/DLdados.txt")[1]
     DLAPvectorY = sl.loadtable(f"data/DLAPdados.txt")[1]
     DIFvectorY = sl.loadtable(f"data/DIFdados.txt")[1]
     MUvectorY = sl.loadtable(f"data/MUdados.txt")[1]
+    ANALMU_MY = sl.loadtable(f"data/ANALMU_Mdados.txt")[1]
+    ANALMU_EEY = sl.loadtable(f"data/ANALMU_EEdados.txt")[1]
+    ANALMU_VY = sl.loadtable(f"data/ANALMU_Mdados.txt")[1]
     infos = sl.loadtable(f"data/infos.txt")[0]
-    sy.ok(("infos", "DLdados", "MUdados", "DLAPdados", "DIFdados"))
+    sy.ok(("infos", "DLdados", "MUdados", "DLAPdados", "DIFdados", "ANALMU_Mdados", "ANALMU_EEdados", "ANALMU_Vdados"))
     sy.status("Dados carregados com sucesso!")
     sy.param(
         ("Omega_M", infos[0]), ("Omega_EE", infos[1]), ("w", infos[2]), ("z", infos[3])
@@ -96,12 +100,48 @@ try:
         filename="MUdistribuicao",
         show_plot=False,
     )
+    gp.multi(
+        x_list=[ANALMUX, MUvectorX],
+        y_list=[ANALMU_MY, MUvectorY],
+        title="",
+        x_label=r"$z$",
+        y_label=r"$\mu$ (mag)",
+        curve_names=("Curva Analítica", "Curva Numérica"),
+        save_fig=True,
+        filename="AnalitVSNumer_M",
+        show_plot=False,
+    )
+    gp.multi(
+        x_list=[ANALMUX, MUvectorX],
+        y_list=[ANALMU_EEY, MUvectorY],
+        title="",
+        x_label=r"$z$",
+        y_label=r"$\mu$ (mag)",
+        curve_names=("Curva Analítica", "Curva Numérica"),
+        save_fig=True,
+        filename="AnalitVSNumer_EE",
+        show_plot=False,
+    )
+    gp.multi(
+        x_list=[ANALMUX, MUvectorX],
+        y_list=[ANALMU_VY, MUvectorY],
+        title="",
+        x_label=r"$z$",
+        y_label=r"$\mu$ (mag)",
+        curve_names=("Curva Analítica", "Curva Numérica"),
+        save_fig=True,
+        filename="AnalitVSNumer_V",
+        show_plot=False,
+    )
     sy.ok(
         (
             "Gráfico de Distância de Luminosidade",
             "Gráfico de Distância de Luminosidade Aproximada",
             "Gráfico de Anlálise de Erro Aproximação vs. Exato",
             "Gráfico de Módulo de Distância",
+            "Gráfico de comparação de Universo Only-Matter vs. Simulado",
+            "Gráfico de comparação de Universo Only-Energy vs. Simulado",
+            "Gráfico de comparação de Universo Vazio vs. Simulado",
         )
     )
     sy.fim()

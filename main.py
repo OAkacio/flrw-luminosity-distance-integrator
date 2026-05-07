@@ -85,11 +85,25 @@ def main(Omega_M, Omega_EE, w, z, type="return"):
         DLAPvectorY = sollist[5]
         DIFvectorX = sollist[6]
         DIFvectorY = sollist[7]
-
+    except Exception as e:
+        sy.ok(
+            f"Processo de importação de elementos falhou! Erro: {e}...", False
+        )
+    try:
+        sy.status("Iniciando processo de cálculo de elementos analíticos...")
+        ANALsol=analitic_solutionator(z, z_step)
+        ANALMU_M=ANALsol[0]
+        ANALMU_EE=ANALsol[1]
+        ANALMU_V=ANALsol[2]
+        ANALZ_list=ANALsol[3]
+    except Exception as e:
+        sy.ok(
+            f"Processo de cálculo de elementos analíticos falhou! Erro: {e}...", False
+        )
         # ? -----------------------------------------------------------------------------
         # ?         EXPORTAÇÃO DE DADOS
         # ? -----------------------------------------------------------------------------
-
+    try:
         if type == "custom":
             sy.status("Iniciando exportação de dados...")
             sl.savetable("infos", ((Omega_M, Omega_EE, w, z), ("", "", "", "")))
@@ -97,7 +111,10 @@ def main(Omega_M, Omega_EE, w, z, type="return"):
             sl.savetable("MUdados", (MUvectorX, MUvectorY))
             sl.savetable("DLAPdados", (DLAPvectorX, DLAPvectorY))
             sl.savetable("DIFdados", (DIFvectorX, DIFvectorY))
-            sy.ok(("infos", "DLdados", "MUdados", "DLAPdados", "DIFdados"))
+            sl.savetable("ANALMU_Mdados", (ANALZ_list, ANALMU_M))
+            sl.savetable("ANALMU_EEdados", (ANALZ_list, ANALMU_EE))
+            sl.savetable("ANALMU_Vdados", (ANALZ_list, ANALMU_V))
+            sy.ok(("infos", "DLdados", "MUdados", "DLAPdados", "DIFdados", "ANALMU_Mdados", "ANALMU_EEdados", "ANALMU_Vdados"))
         elif type == "M":
             sy.status("Iniciando exportação de dados...")
             sl.savetable("infosM", ((Omega_M, Omega_EE, w, z), ("", "", "", "")))
