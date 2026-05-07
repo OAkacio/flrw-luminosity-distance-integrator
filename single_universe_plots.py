@@ -38,7 +38,7 @@ try:
     MUvectorX = sl.loadtable(f"data/MUdados.txt")[0]
     ANALMUX = sl.loadtable(f"data/ANALMU_Mdados.txt")[0]
     MagApX = sl.loadtable(f"data/MagAp_list.txt")[0]
-    astropyX= sl.loadtable(f"data/astropy_MU.txt")[0]
+    astropyX = sl.loadtable(f"data/astropy_MU.txt")[0]
     DLvectorY = sl.loadtable(f"data/DLdados.txt")[1]
     DLAPvectorY = sl.loadtable(f"data/DLAPdados.txt")[1]
     DIFvectorY = sl.loadtable(f"data/DIFdados.txt")[1]
@@ -47,8 +47,8 @@ try:
     ANALMU_EEY = sl.loadtable(f"data/ANALMU_EEdados.txt")[1]
     ANALMU_VY = sl.loadtable(f"data/ANALMU_Vdados.txt")[1]
     MagApY = sl.loadtable(f"data/MagAp_list.txt")[1]
-    astropy_DL= sl.loadtable(f"data/astropy_DL.txt")[1]
-    astropy_MU= sl.loadtable(f"data/astropy_MU.txt")[1]
+    astropy_DL = sl.loadtable(f"data/astropy_DL.txt")[1]
+    astropy_MU = sl.loadtable(f"data/astropy_MU.txt")[1]
     infos = sl.loadtable(f"data/infos.txt")[0]
     sy.ok(
         (

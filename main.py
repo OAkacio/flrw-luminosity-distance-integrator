@@ -26,7 +26,11 @@ from pytools import saveload as sl
 
 def main(Omega_M, Omega_EE, w, z, type="return"):
     sy.header(
-        "iniciando HoggCosmoMeasures...", Omega_M=round(Omega_M,2), Omega_EE=round(Omega_EE,2), w=round(w,2), z=round(z,2),
+        "iniciando HoggCosmoMeasures...",
+        Omega_M=round(Omega_M, 2),
+        Omega_EE=round(Omega_EE, 2),
+        w=round(w, 2),
+        z=round(z, 2),
     )
 
     # ? -----------------------------------------------------------------------------
@@ -86,38 +90,34 @@ def main(Omega_M, Omega_EE, w, z, type="return"):
         DIFvectorX = sollist[6]
         DIFvectorY = sollist[7]
     except Exception as e:
-        sy.ok(
-            f"Processo de importação de elementos falhou! Erro: {e}...", False
-        )
+        sy.ok(f"Processo de importação de elementos falhou! Erro: {e}...", False)
     try:
         sy.status("Iniciando processo de cálculo de elementos analíticos...")
-        ANALsol=analitic_solutionator(z, z_step)
-        ANALMU_M=ANALsol[0]
-        ANALMU_EE=ANALsol[1]
-        ANALMU_V=ANALsol[2]
-        ANALZ_list=ANALsol[3]
+        ANALsol = analitic_solutionator(z, z_step)
+        ANALMU_M = ANALsol[0]
+        ANALMU_EE = ANALsol[1]
+        ANALMU_V = ANALsol[2]
+        ANALZ_list = ANALsol[3]
     except Exception as e:
         sy.ok(
             f"Processo de cálculo de elementos analíticos falhou! Erro: {e}...", False
         )
     try:
         sy.status("Iniciando processo de cálculo de Magnitude Aparente...")
-        MagAp_list=MagAp_list_MAGABSCONST(MUvectorY, MagABS)
+        MagAp_list = MagAp_list_MAGABSCONST(MUvectorY, MagABS)
         sy.ok("Cálculo de Magnitude Aparente concluido!", True)
     except Exception as e:
-        sy.ok(
-            f"Processo de cálculo de Magnitude Aparente falhou! Erro: {e}...", False
-        )
+        sy.ok(f"Processo de cálculo de Magnitude Aparente falhou! Erro: {e}...", False)
     try:
-        sy.status("Iniciando processo obtenção de dados pelo ASTROPY para validação e comparação...")
-        astropy_DL=astropyComparison(Omega_M, Omega_EE, z, z_step)[0]
-        astropy_MU=astropyComparison(Omega_M, Omega_EE, z, z_step)[1]
-        astropy_Z=astropyComparison(Omega_M, Omega_EE, z, z_step)[2]
-        sy.ok(["astropy_DL","astropy_MU", "astropy_Z"])
-    except Exception as e:
-        sy.ok(
-            f"Processo de obtenção de dados pelo ASTROPY falhou! Erro: {e}...", False
+        sy.status(
+            "Iniciando processo obtenção de dados pelo ASTROPY para validação e comparação..."
         )
+        astropy_DL = astropyComparison(Omega_M, Omega_EE, z, z_step)[0]
+        astropy_MU = astropyComparison(Omega_M, Omega_EE, z, z_step)[1]
+        astropy_Z = astropyComparison(Omega_M, Omega_EE, z, z_step)[2]
+        sy.ok(["astropy_DL", "astropy_MU", "astropy_Z"])
+    except Exception as e:
+        sy.ok(f"Processo de obtenção de dados pelo ASTROPY falhou! Erro: {e}...", False)
         # ? -----------------------------------------------------------------------------
         # ?         EXPORTAÇÃO DE DADOS
         # ? -----------------------------------------------------------------------------
@@ -135,7 +135,21 @@ def main(Omega_M, Omega_EE, w, z, type="return"):
             sl.savetable("MagAp_list", (MUvectorX, MagAp_list))
             sl.savetable("astropy_DL", (list(astropy_Z), list(astropy_DL)))
             sl.savetable("astropy_MU", (list(astropy_Z), list(astropy_MU)))
-            sy.ok(("infos", "DLdados", "MUdados", "DLAPdados", "DIFdados", "ANALMU_Mdados", "ANALMU_EEdados", "ANALMU_Vdados", "MagAp_list", "astropy_DL", "astropy_MU"))
+            sy.ok(
+                (
+                    "infos",
+                    "DLdados",
+                    "MUdados",
+                    "DLAPdados",
+                    "DIFdados",
+                    "ANALMU_Mdados",
+                    "ANALMU_EEdados",
+                    "ANALMU_Vdados",
+                    "MagAp_list",
+                    "astropy_DL",
+                    "astropy_MU",
+                )
+            )
         elif type == "M":
             sy.status("Iniciando exportação de dados...")
             sl.savetable("infosM", ((Omega_M, Omega_EE, w, z), ("", "", "", "")))

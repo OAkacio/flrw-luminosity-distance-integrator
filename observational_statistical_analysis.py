@@ -144,7 +144,10 @@ try:
         alpha=0.7,
         color_style="#0E4D92",
         linewidth=1.5,
-        curve_names=("Dados observados", rf"Curva MLE ( $\Omega_m={round(var1d[1][INDchi_min],3)}, \Omega_\Lambda={round(var1d[2][INDchi_min],3)}$ )"),
+        curve_names=(
+            "Dados observados",
+            rf"Curva MLE ( $\Omega_m={round(var1d[1][INDchi_min],3)}, \Omega_\Lambda={round(var1d[2][INDchi_min],3)}$ )",
+        ),
     )
     sy.ok("Gráfico dos parâmetros ajustados com dados observados criado com sucesso!")
 except Exception as e:
@@ -289,7 +292,10 @@ try:
         alpha=0.7,
         color_style="#0E4D92",
         linewidth=1.5,
-        curve_names=("Dados observados", rf"Curva MLE ( $\Omega_m={round(omegaM_list[MINDchi2d_min],3)}, \Omega_\Lambda={round(omegaEE_list[EEINDchi2d_min],3)}$ )"),
+        curve_names=(
+            "Dados observados",
+            rf"Curva MLE ( $\Omega_m={round(omegaM_list[MINDchi2d_min],3)}, \Omega_\Lambda={round(omegaEE_list[EEINDchi2d_min],3)}$ )",
+        ),
     )
     sy.ok("Gráfico dos parâmetros ajustados com dados observados criado com sucesso!")
 except Exception as e:
@@ -416,7 +422,10 @@ try:
         alpha=0.7,
         color_style="#0E4D92",
         linewidth=1.5,
-        curve_names=("Dados observados", rf"Curva MLE ( $\Omega_m={round(omegaM_list[MINDchi2d_minPRIOR],3)}, \Omega_\Lambda={round(omegaEE_list[EEINDchi2d_minPRIOR],3)}$ )"),
+        curve_names=(
+            "Dados observados",
+            rf"Curva MLE ( $\Omega_m={round(omegaM_list[MINDchi2d_minPRIOR],3)}, \Omega_\Lambda={round(omegaEE_list[EEINDchi2d_minPRIOR],3)}$ )",
+        ),
     )
     sy.ok("Gráfico dos parâmetros ajustados com dados observados criado com sucesso!")
 except Exception as e:
@@ -528,7 +537,7 @@ try:
     )
     main(
         Omega_M=omegaM_list[MINDchi2dOW_min],
-        Omega_EE=1-omegaM_list[MINDchi2dOW_min],
+        Omega_EE=1 - omegaM_list[MINDchi2dOW_min],
         w=w_list[WINDchi2dOW_min],
         z=max(z_list),
         type="custom",
@@ -555,7 +564,10 @@ try:
         alpha=0.7,
         color_style="#0E4D92",
         linewidth=1.5,
-        curve_names=("Dados observados", rf"Curva MLE ( $\Omega_m={round(omegaM_list[MINDchi2dOW_min],3)}, w={round(w_list[WINDchi2dOW_min],3)}$ )"),
+        curve_names=(
+            "Dados observados",
+            rf"Curva MLE ( $\Omega_m={round(omegaM_list[MINDchi2dOW_min],3)}, w={round(w_list[WINDchi2dOW_min],3)}$ )",
+        ),
     )
     sy.ok("Gráfico dos parâmetros ajustados com dados observados criado com sucesso!")
 except Exception as e:
@@ -566,8 +578,20 @@ except Exception as e:
 try:
     sy.status("Iniciando geração de gráfico de superposição de curvas ajustadas...")
     gp.multierror(
-        x_list=[z_list, ajustMUvectorX, ajustMUvectorXV2, ajustMUvectorXV2PRIOR, ajustMUvectorXV2w],
-        y_list=[mu_obs_list, ajustMUvectorY, ajustMUvectorYV2, ajustMUvectorYV2PRIOR, ajustMUvectorYV2w],
+        x_list=[
+            z_list,
+            ajustMUvectorX,
+            ajustMUvectorXV2,
+            ajustMUvectorXV2PRIOR,
+            ajustMUvectorXV2w,
+        ],
+        y_list=[
+            mu_obs_list,
+            ajustMUvectorY,
+            ajustMUvectorYV2,
+            ajustMUvectorYV2PRIOR,
+            ajustMUvectorYV2w,
+        ],
         y_err_list=[ERROmu_obs_list, None, None, None, None],
         title="",
         x_label=r"$z$",
@@ -584,7 +608,13 @@ try:
         alpha=0.7,
         color_style="random",
         linewidth=0.1,
-        curve_names=("Dados observados", rf"Curva MLE ( $\Omega_m={round(var1d[1][INDchi_min],3)}, \Omega_\Lambda={round(var1d[2][INDchi_min],3)}$ )", rf"Curva MLE ( $\Omega_m={round(omegaM_list[MINDchi2d_min],3)}, \Omega_\Lambda={round(omegaEE_list[EEINDchi2d_min],3)}$ )", rf"Curva MLE ( $\Omega_m={round(omegaM_list[MINDchi2d_minPRIOR],3)}, \Omega_\Lambda={round(omegaEE_list[EEINDchi2d_minPRIOR],3)}$ )", rf"Curva MLE ( $\Omega_m={round(omegaM_list[MINDchi2dOW_min],3)}, w={round(w_list[WINDchi2dOW_min],3)}$ )"),
+        curve_names=(
+            "Dados observados",
+            rf"Curva MLE ( $\Omega_m={round(var1d[1][INDchi_min],3)}, \Omega_\Lambda={round(var1d[2][INDchi_min],3)}$ )",
+            rf"Curva MLE ( $\Omega_m={round(omegaM_list[MINDchi2d_min],3)}, \Omega_\Lambda={round(omegaEE_list[EEINDchi2d_min],3)}$ )",
+            rf"Curva MLE ( $\Omega_m={round(omegaM_list[MINDchi2d_minPRIOR],3)}, \Omega_\Lambda={round(omegaEE_list[EEINDchi2d_minPRIOR],3)}$ )",
+            rf"Curva MLE ( $\Omega_m={round(omegaM_list[MINDchi2dOW_min],3)}, w={round(w_list[WINDchi2dOW_min],3)}$ )",
+        ),
     )
     sy.ok("Gráfico da superposição das curvas ajustadas criado com sucesso!")
 except Exception as e:
